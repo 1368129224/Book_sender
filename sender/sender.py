@@ -26,7 +26,8 @@ def upload():
     if 'file' not in request.files:
         flash('No file part')
         # return redirect(request.url)
-        return make_response('application/json')
+        # return make_response('application/json')
+        return '-1'
     file = request.files['file']
     if file.filename == '':
         flash('No selected file')

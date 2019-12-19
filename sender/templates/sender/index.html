@@ -15,8 +15,7 @@
                 multiple
                 :auto-upload="false"
                 :limit="1"
-                {#                :data="data">#}
-        >
+                :data="mydata">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb</div>
@@ -32,19 +31,24 @@
         var app = new Vue({
             el: '#app',
             data: {
-                'data': {'email': ''},
+                'email': '',
             },
             methods: {
                 submitUpload() {
                     this.$refs.upload.submit();
-                    axios.post('{{ url_for('sender.upload') }}', {
-                        'data': {'email': ''},
-                    }).then(function (response) {
-                        console.log(response);
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
+                    {#axios.post('{{ url_for('sender.upload') }}', {#}
+//                        'data': app.data.email,
+//                    }).then(function (response) {
+//                        console.log(response);
+//                    }).catch(function (error) {
+//                        console.log(error);
+//                    });
                 }
+            },
+            computed: {
+                mydata (){
+                    return {'email': this.email}
+                },
             }
         })
     </script>
