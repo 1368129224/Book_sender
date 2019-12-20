@@ -4,24 +4,38 @@
     Home
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
 {% block content %}
-    <h1>Hello world!</h1>
     <div id="app">
-        <el-upload
-                class="upload-demo"
-                ref="upload"
-                drag
-                action="{{ url_for('sender.upload') }}"
-                multiple
-                :auto-upload="false"
-                :limit="1"
-                :data="mydata">
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb</div>
-        </el-upload>
-        <el-input v-model="data['email']" name="email" placeholder="邮箱"></el-input>
-        <el-button round @click="submitUpload">推送</el-button>
+        <el-row>
+        <el-col :span="12" :offset="6"><div style="text-align: center;margin-top: 40px"><h1>推送书籍</h1></div></el-col>
+            <el-col :span="12" :offset="6">
+                <div class="grid-content">
+                    <el-upload
+                            id="upload-demo"
+                            ref="upload"
+                            drag
+                            action="{{ url_for('sender.upload') }}"
+                            multiple
+                            :auto-upload="false"
+                            :limit="1"
+                            :data="mydata"
+                            :on-success="success">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                        <div id="upload-label" class="el-upload__tip" slot="tip">只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb</div>
+                    </el-upload>
+                    <el-input id="email-input" v-model="form.email" name="email" placeholder="邮箱"></el-input>
+                    <el-button id="email-button" round @click="submitUpload">推送</el-button>
+                    {% for message in get_flashed_messages() %}
+                        <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            </el-col>
+        </el-row>
     </div>
 {% endblock %}
 
@@ -31,25 +45,31 @@
         var app = new Vue({
             el: '#app',
             data: {
-                'email': '',
+                'form': {
+                    'email': '',
+                },
             },
             methods: {
                 submitUpload() {
                     this.$refs.upload.submit();
-                    {#axios.post('{{ url_for('sender.upload') }}', {#}
-//                        'data': app.data.email,
-//                    }).then(function (response) {
-//                        console.log(response);
-//                    }).catch(function (error) {
-//                        console.log(error);
-//                    });
+                },
+                success(response) {
+                    console.log(response);
+                    if (response === 0) {
+                        alert('上传成功');
+                        window.location.href = '{{ url_for("sender.index") }}';
+                    } else if (response === -2) {
+                        alert('请选择文件')
+                    } else {
+                        alert('请求错误')
+                    }
                 }
             },
             computed: {
-                mydata (){
-                    return {'email': this.email}
+                mydata() {
+                    return {'email': this.form.email}
                 },
-            }
+            },
         })
     </script>
 {% endblock %}

@@ -1,0 +1,34 @@
+.grid-content {
+    margin-top: 170px;
+}
+
+#upload-label {
+    position: absolute;
+    font-size: 1rem;
+}
+
+#email-input {
+    width: 300px;
+    position: relative;
+    left: 562px;
+}
+
+#email-button {
+    position: relative;
+    bottom: 40px;
+    left: 882px;
+}
+
+.el-upload {
+    width: 100%;
+}
+
+.el-upload-dragger {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 10px;
+}
+
+.el-icon-upload {
+    margin-top: 130px !important;
+}

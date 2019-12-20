@@ -24,23 +24,20 @@ def allowed_file(filename):
 @bp.route('/upload', methods=('POST', 'GET'))
 def upload():
     if 'file' not in request.files:
+        print(request.files)
         flash('No file part')
-        # return redirect(request.url)
-        # return make_response('application/json')
         return '-1'
     file = request.files['file']
     if file.filename == '':
         flash('No selected file')
-        # return redirect(request.url)
         return '-2'
     if file and allowed_file(file.filename):
-        print(file.filename)
         print(request.form)
         email = request.form.to_dict().get('email')
+        print(email)
         filename = secure_filename(file.filename)
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         # send_email(email, UPLOAD_FOLDER, filename)
-        # return redirect(url_for('sender.index'))
         return '0'
