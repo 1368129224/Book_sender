@@ -5,13 +5,15 @@
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}
 
 {% block content %}
     <div id="app">
         <el-row>
-        <el-col :span="12" :offset="6"><div style="text-align: center;margin-top: 40px"><h1>推送书籍</h1></div></el-col>
+            <el-col :span="12" :offset="6">
+                <div style="text-align: center;margin-top: 40px"><h1>推送书籍</h1></div>
+            </el-col>
             <el-col :span="12" :offset="6">
                 <div class="grid-content">
                     <el-upload
@@ -26,7 +28,9 @@
                             :on-success="success">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                        <div id="upload-label" class="el-upload__tip" slot="tip">只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb</div>
+                        <div id="upload-label" class="el-upload__tip" slot="tip">
+                            只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb
+                        </div>
                     </el-upload>
                     <el-input id="email-input" v-model="form.email" name="email" placeholder="邮箱"></el-input>
                     <el-button id="email-button" round @click="submitUpload">推送</el-button>
@@ -71,6 +75,38 @@
                 },
             },
         })
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var newVisitor = isNewVisitor();
+            if (newVisitor === true) {
+                alert('您是新用户！');
+                setCookie("gznotes-visited", "true", 5);
+            }
+        };
+
+        function isNewVisitor() {
+            var flg = getCookie("gznotes-visited");
+            return flg === "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1);
+                if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
     </script>
 {% endblock %}
 

@@ -26,4 +26,4 @@ def send_email(to_addr, path, file_name):
         return -1
 
 if __name__ == '__main__':
-    send_email(r'D:\pycharm_workspace\Book_sender\sender\books', '新建文本文档.txt')
+    pass

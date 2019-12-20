@@ -6,7 +6,6 @@ from flask import (
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 from . import UPLOAD_FOLDER
-from flask import make_response
 from .utils import send_email
 
 
@@ -39,5 +38,5 @@ def upload():
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
-        # send_email(email, UPLOAD_FOLDER, filename)
+        send_email(email, UPLOAD_FOLDER, filename)
         return '0'
