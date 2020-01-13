@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block  title %}
-    Sign up
+    Sign in
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -22,8 +22,8 @@
                                   style="margin: 10px 0;">
                             <template slot="prepend">Password</template>
                         </el-input>
-                        <el-link type="primary" href="{{ url_for('auth.login') }}" style="width: 60px">Sign in</el-link>
-                        <el-button plain style="margin: 10px 0; left: 236px; width: 100px; position: relative;" @click="register">sign up
+                        <el-link type="primary" href="{{ url_for('auth.register') }}" style="width: 60px">Sign up</el-link>
+                        <el-button plain style="margin: 10px 0; left: 236px; width: 100px; position: relative;" @click="login">sign in
                         </el-button>
                     </div>
                 </el-col>
@@ -42,14 +42,8 @@
                 password: ''
             },
             methods: {
-                open: function () {
-                    this.$alert('<p>请使用kindle推送邮箱注册。</p>' +
-                        '<p>请牢记<strong>邮箱</strong>及<strong>密码</strong>本站不提供密码修改及找回服务！</p>', '注册须知', {
-                        dangerouslyUseHTMLString: true
-                    });
-                },
-                register: function () {
-                    axios.post('{{ url_for("auth.register") }}', {
+                login: function () {
+                    axios.post('/auth/login', {
                         email: this.email,
                         password: this.password
                     }).then(function (response) {
@@ -62,19 +56,16 @@
                         } else {
                             app.$message({
                                 showClose: true,
-                                message: 'Sign up successfully.',
+                                message: 'Sign in successfully.',
                                 type: 'success'
                             });
                             setTimeout(function () {
-                                window.location.href = '{{ url_for('auth.login') }}'
+                                window.location.href = '{{ url_for('index') }}'
                             }, 2000)
                         }
                     })
                 },
             }
         });
-        window.onload = function () {
-            app.open()
-        };
     </script>
 {% endblock %}

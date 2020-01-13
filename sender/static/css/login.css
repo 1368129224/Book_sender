@@ -1,0 +1,9 @@
+#input {
+    width: 400px;
+    margin: auto;
+    margin-top: 300px;
+}
+
+.el-row {
+    margin: 0 !important;
+}

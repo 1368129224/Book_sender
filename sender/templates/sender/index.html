@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -28,10 +28,10 @@
                             :on-success="success">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                        <div id="upload-label" class="el-upload__tip" slot="tip">
-                            只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb
-                        </div>
                     </el-upload>
+                    <div id="upload-label" class="el-upload__tip" slot="tip">
+                        只能上传txt,mobi,doc,docx,rtf,pdf文件，且不超过25Mb
+                    </div>
                     <el-input id="email-input" v-model="form.email" name="email" placeholder="邮箱"></el-input>
                     <el-button id="email-button" round @click="submitUpload">推送</el-button>
                     {% for message in get_flashed_messages() %}
