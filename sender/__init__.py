@@ -13,10 +13,8 @@ app.config.from_mapping(
 )
 mongo = PyMongo(app)
 
-from . import auth
+from . import auth, sender
 app.register_blueprint(auth.bp)
-
-from . import sender
 app.register_blueprint(sender.bp)
 app.add_url_rule('/', endpoint='index')
 
